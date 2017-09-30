@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+	<!-- <meta http-equiv="Pragma" content="no-cache" /> -->
+	<title>Catch the Coin | Элементарно</title>
+
+
+
+	<link rel="stylesheet" href="css/jquery-ui.min.css">
+	<link rel="stylesheet" href="css/croppie.css" />
+
+	<link type="text/css" href="css/jquery.jscrollpane.css" rel="stylesheet" media="all" />
+
+	<link rel="stylesheet" href="css/main.css">
+	<link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC" rel="stylesheet" type="text/css">
+
+
+	
+	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script> -->
+	<script src="js/jquery-1.12.4.js"></script>
+	<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery.ui.touch-punch.js"></script>
+	<script src="js/croppie.js"></script>
+	<!-- <script src="https://yastatic.net/share2/share.js"></script> -->
+	<script src="js/share.js"></script>
+	<!-- <script src="https://vk.com/js/api/xd_connection.js?2"  type="text/javascript"></script> -->
+	<script src="js/xd_connection.js"  type="text/javascript"></script>
+
+	<script type="text/javascript" src="js/jquery.mousewheel.js"></script>
+	<script type="text/javascript" src="js/jquery.jscrollpane.min.js"></script>
+
+	<script>
+
+		// window.onload = (function () {
+		// 	if (userAgent.indexOf('Safari') == -1) {
+		// 		$('.page').css('background', 'rgba(0, 0, 0, 1)');
+		// 		alert('zzz')
+		// 	}
+		// 	// body...
+		// })
+
+		// $('body').load (function () {
+		// 	if (navigator.userAgent.indexOf('Safari') == -1) {
+
+		// 		$('.page').css('background', 'rgba(0, 0, 0, 1)');
+		// 		alert('zzz')
+		// 	}
+		// })
+	</script>
+
+</head>
+<body>
+	<div class="page">
+		<div class="page-wrap">
+
+			<div class="header-wrap">
+				<a href="#" class="logo-hrus">
+					<img src="img/logo.png" alt="ХрусTeam">
+				</a>
+
+				<div class="slogan">
+					<img src="img/slogan.png" alt="">
+				</div>
+
+			</div>
+
+			<div class="game-frame">
+				<div id="upload-demo" class="screen">
+
+					<div class="upload-file-wrapper">
+						<div class="upload-file">
+							<lable class="button-overlay" for="load-photo"></lable>
+							<input id="load-photo" class="load-photo hide" type="file" accept="image/png, image/jpeg" onchange="openFile(event)">
+							<!-- <div class="button-overlay">
+								<p>выберете фото</p>
+							</div> -->
+						</div>
+
+					</div>
+					<div class="croppie-wrapper hide">
+						<img class="my-image" src="">
+					</div>
+
+					<div class="result-button-wrapper hide">
+						<h2 class="button-wrapper-name">обрезать фото</h2>
+
+						<div class="turn-button-wrapper">
+							<a class="turn-left-button button hide" type="button"  data-deg="-90"><p>повернуть</p></a>
+							<a class="turn-right-button button hide" type="button"  data-deg="90"><p>повернуть</p></a>
+						</div>
+						<a class="result-button button hide" type="button"><p>Обрезать фото</p></a>
+					</div>
+
+				</div>
+				<!-- <div class="result-button-wrapper hide">
+						<h2 class="button-wrapper-name">обрезать фото</h2>
+						<a class="turn-left-button button hide" type="button"  data-deg="-90"><p>повернуть</p></a>
+						<a class="turn-right-button button hide" type="button"  data-deg="90"><p>повернуть</p></a>
+						<a class="result-button button hide" type="button"><p>обрезать фото</p></a>
+					</div> -->
+
+				<div class="editor-container hide">
+					<canvas id="output" width="530" height="530" dropzone="move" draggable="true"></canvas>
+					<div class="mask-bar"></div>
+
+				</div>
+					<div class="mask-container-wrap hide">
+
+					<!-- scroll-pane horizontal-only jspScrollable -->
+
+
+						<h2 class="choose-mask">Выберете элемент</h2>
+						<div id="mask-container" class="mask-container result-button-wrapper-block">
+
+							<div id="mask-container-inner" class="mask-container-inner">
+							<div class="icon-wrapper">
+								<div class="icon-1-stroke icon-stroke"></div>
+								<div id="glasses" class="mask-img glasses icon-1">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+
+							<div class="icon-wrapper">
+								<div class="icon-6-stroke icon-stroke"></div>
+								<div id="magnifier" class="mask-img magnifier icon-6">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-2-stroke icon-stroke"></div>
+								<div id="mustache" class="mask-img mustache icon-2">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+
+							<div class="icon-wrapper">
+								<div class="icon-7-stroke icon-stroke"></div>
+								<div id="monocle" class="mask-img monocle icon-7">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-3-stroke icon-stroke"></div>
+								<div id="pipe" class="mask-img pipe icon-3">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-8-stroke icon-stroke"></div>
+								<div id="bowtie" class="mask-img bowtie icon-8">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-4-stroke icon-stroke"></div>
+								<div id="hat" class="mask-img hat icon-4">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-9-stroke icon-stroke"></div>
+								<div id="violin" class="mask-img violin icon-9">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							<div class="icon-wrapper">
+								<div class="icon-5-stroke icon-stroke"></div>
+								<div id="cap" class="mask-img cap icon-5">
+									<div class="close-mask hide"></div>
+								</div>
+							</div>
+							</div>
+
+
+							
+						</div>
+						<div class="scroll-wrapper">
+							<div class="scroll">
+								<!-- <div class="controller-wrapper">
+									<div class="scroll-controller scroll-controller-left"></div> 
+									<div class="scroll-controller scroll-controller-right"></div>
+								</div> -->
+							</div>
+						</div>
+
+						<!-- <div class="scroll-pane horizontal-only jspScrollable"></div> -->
+
+					</div>
+								<div class="controll-bar">
+				<a href="#" class="btn save-button disabled" type="button">сохранить фото</a>
+				<a href="#" class="btn clear-button disabled">очистить</a>
+
+				<div class="social-wrapper">
+
+					<div class="inner float-right">
+						<p class="share">поделиться</p>
+						<div class="social">
+						<a href="#" id="facebook" class="ya-share2" data-services="facebook"></a>
+						<a href="#" id="vkontakte" class="ya-share2" data-services="vkontakte"></a>
+						
+						<a href="#" id="odnoklassniki" class="ya-share2" data-services="odnoklassniki"></a>
+						</div>
+					</div>
+					
+					<div class="social-overlay"></div>
+					
+				</div>
+			</div>
+				</div>
+
+
+
+
+
+
+
+			
+
+<!-- 			<div class="controll-bar">
+				<a href="#" class="btn save-button disabled" type="button">сохранить фото</a>
+				<a href="#" class="btn clear-button disabled">очистить</a>
+
+				<div class="social-wrapper">
+
+					<div class="inner float-right">
+						<p class="share">поделиться</p>
+						<a href="#" id="facebook" class="ya-share2" data-services="facebook"></a>
+						<a href="#" id="vkontakte" class="ya-share2" data-services="vkontakte"></a>
+						
+						<a href="#" id="odnoklassniki" class="ya-share2" data-services="odnoklassniki"></a>
+					</div>
+					
+					<div class="social-overlay"></div>
+					
+				</div>
+			</div> -->
+
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		var script = document.createElement('SCRIPT');
+		script.src = "https://api.vk.com/method/pages.clearCache?url=http://ashwood.by/demo/9.05_photo-editor-master/index.html";
+		document.getElementsByTagName("head")[0].appendChild(script);
+
+	</script>
+
+	<script type="text/javascript">
+		var script = document.createElement('SCRIPT');
+		script.src = "https://api.vk.com/method/pages.clearCache?https://vk.com/share.php?url=http%3A%2F%2Fashwood.by%2Fdemo%2F9.05_photo-editor-master-23%2F&title=%D0%A5%D1%80%D1%83%D1%81Team&description=&image=&utm_source=share2";
+		document.getElementsByTagName("head")[0].appendChild(script);
+
+	</script>
+
+	<script type="text/javascript">
+		var script = document.createElement('SCRIPT');
+		script.src = "https://api.vk.com/method/pages.clearCache?https://vk.com/im?sel=10192965";
+		document.getElementsByTagName("head")[0].appendChild(script);
+
+	</script>
+
+	<script src="js/main.js"></script>
+</body>
+</html>
+
+
+
+<!-- <a href="#" id="vkontakte" class="disabled" data-services="vkontakte"></a> -->
