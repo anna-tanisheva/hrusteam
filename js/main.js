@@ -35,7 +35,7 @@ var $uploadCrop = $('.my-image').croppie(
 			viewport:
 					{width: 530, height: 530}
 			}
-			
+
 		);
 var scaleBar = document.querySelector('.cr-slider-wrap');
 scaleBar.classList.add('hide');
@@ -118,7 +118,7 @@ function drowMainImg () {
 		var centerShift_x = ( canvas.width - canvasSize.width*ratio ) / 2;
 		var centerShift_y = ( canvas.height - canvasSize.height*ratio ) / 2;
 		ctx.clearRect(0,0,canvas.width, canvas.height);
-		ctx.drawImage(resultCanvas, 0, 0, canvasSize.width, canvasSize.height, centerShift_x, centerShift_y, canvasSize.width*ratio, canvasSize.height*ratio);	 
+		ctx.drawImage(resultCanvas, 0, 0, canvasSize.width, canvasSize.height, centerShift_x, centerShift_y, canvasSize.width*ratio, canvasSize.height*ratio);
 	});
 }
 
@@ -165,7 +165,7 @@ var openFile = function (evt) {
 
 			buttonsOverlay.classList.add('hide');
 			editorContainer.classList.remove('hide');
-			
+
 			editorContainer.style.zIndex = 11;
 			var disabledBtns = controlBar.querySelectorAll('.disabled');
 			for (var i = 0; i < disabledBtns.length; i++) {
@@ -184,7 +184,7 @@ var openFile = function (evt) {
 				});
 
 				$('.jspDrag')
-				
+
 			}
 
 			$('#vkontakte').css('opacity', '1');
@@ -199,7 +199,7 @@ var openFile = function (evt) {
 			$uploadCrop.croppie('rotate', -90);
 		})
 
-		$('.turn-right-button').on('click', function (evt) { 
+		$('.turn-right-button').on('click', function (evt) {
 			$uploadCrop.croppie('rotate', 90);
 		})
 
@@ -227,12 +227,12 @@ function moveElementsClick (target, container1, container2, class1) {
 		clonedImg.style.top = 0;
 		clonedImg.style.left = 0;
 		clonedImg.setAttribute('tabindex', 1);
-		
+
 		$(clonedImg).draggable({disabled:false, cursor: 'move', containment: 'parent'});
 		$(clonedImg).focus(function() {
 			clonedImg.childNodes[1].classList.remove('hide');
 			$(clonedImg).draggable({disabled:false, cursor: 'move', containment: 'parent'});
-			$(clonedImg).resizable({disabled:false, containment: 'parent', handles: 'all', aspectRatio: true});	
+			$(clonedImg).resizable({disabled:false, containment: 'parent', handles: 'all', aspectRatio: true});
 		});
 
 		$(clonedImg).blur(function() {
@@ -303,11 +303,11 @@ function drawMask () {
 	}
 }
 
-var currentdate = new Date(); 
+var currentdate = new Date();
 var datetime = currentdate.getDate() + "/"
-				+ (currentdate.getMonth()+1)  + "/" 
-				+ currentdate.getFullYear() + "_"  
-				+ currentdate.getHours() + ":"  
+				+ (currentdate.getMonth()+1)  + "/"
+				+ currentdate.getFullYear() + "_"
+				+ currentdate.getHours() + ":"
 				+ currentdate.getMinutes();
 
 
@@ -317,9 +317,17 @@ saveButton.addEventListener('click', function (evt) {
 	drowMainImg ();
 })
 
+var datetime2 = currentdate.getDate() + "_"
+				+ (currentdate.getMonth()+1)  + "_"
+				+ currentdate.getFullYear() + "_"
+				+ currentdate.getHours() + "."
+				+ currentdate.getMinutes() + '.'
+				+ currentdate.getSeconds();
+
+// console.log(typeof(datetime2))
 
 
-// console.log(datetime)
+// share
 
 var vkontakte = document.querySelector('#vkontakte');
 var odnoklassniki = document.querySelector('#odnoklassniki');
@@ -335,65 +343,30 @@ function setUnicueURL() {
 // var unicueURL = setUnicueURL();
 var fileName;
 
-
-
 facebook.addEventListener('click', function() {
 	var unicueURL = setUnicueURL();
+	var currentURL = 'http://annatanishewa.prohosts.org/hrusteam/' + 'tmp_22_' + datetime2 + '.jpg';
 	share2.updateContent({
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: currentURL,
 		title: 'Интерактивная маска Шерлока',
-		description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-		image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg?' + unicueURL
+		description: 'А какой ты Шерлок?' + currentURL,
+		image: currentURL + '?' + unicueURL
 	})
 	drawMask();
 	var canvasB64 = canvas.toDataURL();
 	drowMainImg ()
-	
+
 	$.ajax ({
 		url: './data.php',
 		type: 'POST',
-		data: ({name: canvasB64}),
+		data: ({name: canvasB64,
+						timeStamp: datetime2}),
 		success: function(data){
-			fileName = data;
-			// console.log(fileName);
+			// fileName = data;
+			// console.log(data);
 		}
 	});
-	// var unicueURL = setUnicueURL();
-	// share2.updateContent({
-	// 	url: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	title: 'title',
-	// 	description: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-	// })
 })
-
-// facebook.addEventListener('mousedown', function() {
-// 	var unicueURL = setUnicueURL();
-// 	share2.updateContent({
-// 		url: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-// 		title: 'title',
-// 		description: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-// 		image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-// 	})
-// })
-
-// facebook.addEventListener('mouseup', function() {
-// 	drawMask();
-// 	var canvasB64 = canvas.toDataURL();
-// 	drowMainImg ()
-	
-// 	$.ajax ({
-// 		url: './data.php',
-// 		type: 'POST',
-// 		data: ({name: canvasB64}),
-// 		success: function(data){
-//     		fileName = data;
-//     		console.log(fileName);
-//     	}
-// 	});
-// })
-
-
 
 
 vkontakte.addEventListener('click', function(evt) {
@@ -401,7 +374,7 @@ vkontakte.addEventListener('click', function(evt) {
 	drawMask();
 	var canvasB64 = canvas.toDataURL();
 	drowMainImg ()
-	
+
 	$.ajax ({
 		url: './data.php',
 		type: 'POST',
@@ -410,69 +383,30 @@ vkontakte.addEventListener('click', function(evt) {
 	var unicueURL = setUnicueURL();
 
 	share.updateContent({
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
 		title: 'Интерактивная маска Шерлока',
-		description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-		image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg?' + unicueURL
+		description: 'А какой ты Шерлок? http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
+		image: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg?' + unicueURL
 	})
-	// evt.preventDefault();
-
-	// var unicueURL = setUnicueURL();
-
-	// share.updateContent({
-	// 	url: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	title: 'title',
-	// 	description: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-	// })
-
-
-	// share.updateContent({
-	// 	// url: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-	// 	// title: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-	// 	// description: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-	// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-
-	// })
-
-
-
-	// VK.init(function() { 
-	// 	// API initialization succeeded 
-	// 	// Your code here
-	// 	VK.callMethod("showSettingsBox", 8192);
-	// }, function() { 
-	// 	// API initialization failed 
-	// 	// Can reload page here
-	// 	console.log('initialization failed')
-	// }, '5.64');
-
 })
 
 odnoklassniki.addEventListener('click', function() {
 	var unicueURL = setUnicueURL();
 	share1.updateContent({
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
 		title: 'Интерактивная маска Шерлока',
-		description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-		image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg?' + unicueURL
+		description: 'А какой ты Шерлок? http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
+		image: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg?' + unicueURL
 	})
 	drawMask();
 	var canvasB64 = canvas.toDataURL();
 	drowMainImg ()
-	
+
 	$.ajax ({
 		url: './data.php',
 		type: 'POST',
 		data: ({name: canvasB64})
 	});
-	// var unicueURL = setUnicueURL();
-	// share1.updateContent({
-	// 	url: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	title: 'title',
-	// 	description: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg',
-	// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-	// })
 })
 
 
@@ -481,59 +415,36 @@ odnoklassniki.addEventListener('click', function() {
 
 // работающий код для шаринга ссылки вк
 
+var currentURL = 'http://annatanishewa.prohosts.org/hrusteam/' + 'tmp_22_' + datetime2 + '.jpg';
+
 var share2 = Ya.share2(facebook, {
 	content: {
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: currentURL,
 				title: 'Интерактивная маска Шерлока',
-				description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-				image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg'
+				description: 'А какой ты Шерлок?' + currentURL,
+				image: currentURL
 	}
 });
-
-// share2.updateContent({
-// 	// url: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// title: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// description: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-// })
-
-
 ////////////////////////////работает//////////////////////////////////////////////////////////////
 var share = Ya.share2(vkontakte, {
 	content: {
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
 				title: 'Интерактивная маска Шерлока',
-				description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-				image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg'
+				description: 'А какой ты Шерлок? http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
+				image: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg'
 	}
 });
-
-// share.updateContent({
-// 	// url: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// title: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// description: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-// })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 var share1 = Ya.share2(odnoklassniki, {
 	content: {
-		url: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
+		url: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
 				title: 'Интерактивная маска Шерлока',
-				description: 'А какой ты Шерлок? http://gametest.hrusteam.by/photo-editor/tmp22.jpg',
-				image: 'http://gametest.hrusteam.by/photo-editor/tmp22.jpg'
+				description: 'А какой ты Шерлок? http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg',
+				image: 'http://annatanisheva.prohosts.org/hrusteam/tmp22.jpg'
 	}
 });
-
-// share1.updateContent({
-// 	// url: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// title: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	// description: 'http://ashwood.by/demo/9.05_photo-editor-master-23/tmp2.jpg',
-// 	image: 'http://ashwood.by/demo/9.05_photo-editor-master/tmp22.jpg?' + unicueURL
-// })
-
-
 
 // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -547,114 +458,3 @@ for (var i = 0; i < yaShareLink.length; i ++) {
 	yaShareLink[i].classList.add('disabled');
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// $( ".controller-wrapper" ).draggable({ axis: 'x', containment: 'parent' });
-// $('.controller-wrapper').on('mousemove', function (evt) {
-// 	var leftCoordinate = $( ".controller-wrapper" ).css('left');
-	
-// 	var leftCoordinatePercentsScroll = leftCoordinate.split('p')[0] * 100 / $('.scroll').css('width').split('p')[0];
-
-// 	// console.log($('.mask-container-inner').css('width').split('p')[0])
-
-// 	var leftCoordinatePercentsContainer = $('.mask-container-inner').css('width').split('p')[0] * leftCoordinatePercentsScroll / 100;
-
-// 	console.log(leftCoordinatePercentsContainer)
-// 	// console.log(leftCoordinatePercents)
-
-// 	// if (leftCoordinatePercents >= 77) {
-// 	// 	$('.mask-container-inner').css('left', '-' + 100 + '%')
-// 	// } else {
-// 	// 	$('.mask-container-inner').css('left', '-' + leftCoordinatePercents + '%')
-		
-// 	// }
-
-// 	$('.mask-container-inner').css('left', '-' + leftCoordinatePercentsContainer + 'px');
-
-// })
-
-// $('.controller-wrapper').on('swipe', function (evt) {
-// 	var leftCoordinate = $( ".controller-wrapper" ).css('left');
-	
-// 	var leftCoordinatePercentsScroll = leftCoordinate.split('p')[0] * 100 / $('.scroll').css('width').split('p')[0];
-
-// 	// console.log($('.mask-container-inner').css('width').split('p')[0])
-
-// 	var leftCoordinatePercentsContainer = $('.mask-container-inner').css('width').split('p')[0] * leftCoordinatePercentsScroll / 100;
-
-// 	console.log(leftCoordinatePercentsContainer)
-// 	// console.log(leftCoordinatePercents)
-
-// 	// if (leftCoordinatePercents >= 77) {
-// 	// 	$('.mask-container-inner').css('left', '-' + 100 + '%')
-// 	// } else {
-// 	// 	$('.mask-container-inner').css('left', '-' + leftCoordinatePercents + '%')
-		
-// 	// }
-
-// 	$('.mask-container-inner').css('left', '-' + leftCoordinatePercentsContainer + 'px');
-
-// })
-
-
-// $('.mask-container-inner').on('touchmove', function (evt) {
-// 	var leftCoordinate = $( ".mask-container-inner" ).css('left');
-// 	console.log(leftCoordinate)
-
-// 	var leftCoordinatePercentsContainer = leftCoordinate.split('p')[0] * 100 / $('.mask-container-inner').css('width').split('p')[0]$('.scroll').css('width').split('p')[0];
-// 	console.log(leftCoordinatePercentsContainer)
-
-// 	// var leftCoordinatePercentsScroll = $('.controller-wrapper').css('width').split('p')[0] * leftCoordinatePercentsContainer / 100;
-// 	// console.log(leftCoordinatePercentsScroll)
-// 	// $('.controller-wrapper').css('left', '-' + leftCoordinatePercentsContainer + 'px');
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// удаление по клику маски
-// maskBar.addEventListener('click', function (evt) {
-// 	if (maskBar.childNodes.length !== 0) { 
-// 		var target  = evt.target;
-// 		$(target).resizable('destroy');
-// 		$(target).draggable('destroy');
-// 		target.style.width = size + 'px';
-// 		target.style.height = size + 'px';
-// 		target.style.top = 0;
-// 		target.style.left = 0;
-// 		moveElementsClick (target, maskBar, maskContainer, 'draggable');
-
-// 	}
-// })
-
-
-// maskBar.addEventListener('touchend', function (evt) {
-// 	if (maskBar.childNodes.length !== 0) { 
-// 		var target  = evt.target;
-// 		$(target).resizable('destroy');
-// 		$(target).draggable('destroy');
-// 		target.style.width = size + 'px';
-// 		target.style.height = size + 'px';
-// 		target.style.top = 0;
-// 		target.style.left = 0;
-// 		moveElementsClick (target, maskBar, maskContainer, 'draggable');
-// 	}
-// })
-
-

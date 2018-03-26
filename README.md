@@ -1,2 +1,4 @@
 # hrusteam
-Photo-editor with saving photos and sharing in social networks. Created for ashwood.by
+Photo editor featuring the ability to download and share pictures. Created for ashwood.by
+
+Demo: http://annatanisheva.prohosts.org/hrusteam/
